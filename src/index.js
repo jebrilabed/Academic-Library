@@ -1,11 +1,12 @@
 import React, { useMemo, useState } from "react";
 import ReactDOM from "react-dom/client";
+import { BrowserRouter } from "react-router-dom";
 import App from "./App";
 import { ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import { getTheme } from "./theme/theme";
 import { ColorModeContext } from "./contexts/ThemeContext";
-import { BrowserRouter } from "react-router-dom";
+
 function Root() {
   const [mode, setMode] = useState(localStorage.getItem("theme") || "light");
 
@@ -29,7 +30,9 @@ function Root() {
     <ColorModeContext.Provider value={colorMode}>
       <ThemeProvider theme={theme}>
         <CssBaseline />
-        <App />
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
       </ThemeProvider>
     </ColorModeContext.Provider>
   );

@@ -4,7 +4,7 @@ import { Card, CardActionArea } from "@mui/material";
 import CardContent from "@mui/material/CardContent";
 import { Grid } from "@mui/material";
 import CircularProgress from "@mui/material/CircularProgress";
-import Box from "@mui/material/Box";
+
 
 /**
  * Reusable selection page for Major / Level / Semester flows.

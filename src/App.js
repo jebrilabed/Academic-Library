@@ -8,18 +8,17 @@ import Major from "./pages/Major";
 import Semester from "./pages/Semester";
 
 import "./App.css";
-import { Box, Typography } from "@mui/material";
-import { Button } from "@mui/material";
-import DashboardOutlinedIcon from "@mui/icons-material/DashboardOutlined";
-import Container from "@mui/material/Container";
 
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+
+import DashboardOutlinedIcon from "@mui/icons-material/DashboardOutlined";
+import { Button, Box, Container } from "@mui/material";
+
+import { Routes, Route } from "react-router-dom";
 import { SelectionProvider } from "./contexts/SelectionContext";
 
 function App() {
   return (
     <SelectionProvider>
-      <BrowserRouter>
         <div
           style={{
             display: "flex",
@@ -68,7 +67,6 @@ function App() {
           </Container>
           <Footer />
         </div>
-      </BrowserRouter>
     </SelectionProvider>
   );
 }

@@ -2,13 +2,12 @@
 import SummaryCard from "../components/SummaryCard";
 
 // MUI Imports
-import { Typography, Button, Box } from "@mui/material";
+import { Typography, Button, Box, Container } from "@mui/material";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import TextField from "@mui/material/TextField";
-import { Container } from "@mui/material";
 import { Grid } from "@mui/material";
 import ToggleButton from "@mui/material/ToggleButton";
 import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
@@ -49,7 +48,7 @@ export default function Summaries() {
         levelId: storedLevel?.id,
         semesterId: storedSemester?.id,
       }),
-    []
+    [storedSpecialty?.id, storedLevel?.id, storedSemester?.id]
   );
 
   function handleChange(e) {
@@ -96,7 +95,7 @@ export default function Summaries() {
     return () => {
       cancelled = true;
     };
-  }, [selectValue, debouncedInput, allSummariesVisible, alignment]);
+  }, [selectValue, debouncedInput, allSummariesVisible, alignment, storedSpecialty?.id, storedLevel?.id, storedSemester?.id]);
 
   // Fetch Lectures
   useEffect(() => {
@@ -128,7 +127,7 @@ export default function Summaries() {
     return () => {
       cancelled = true;
     };
-  }, [selectValue, debouncedInput, allLecturesVisible, alignment]);
+  }, [selectValue, debouncedInput, allLecturesVisible, alignment, storedSpecialty?.id, storedLevel?.id, storedSemester?.id]);
 
   function handleSearch(e) {
     setInputValue(e.target.value);
@@ -264,13 +263,11 @@ export default function Summaries() {
                   visibility: (summaries.length >= 9 || allSummariesVisible) ? "visible" : "hidden",
                   bgcolor: "button.primary",
                   borderRadius: 2,
-                  textTransform: "none",
                   fontWeight: 600,
                   fontSize: 14,
                   px: 2.5,
                   py: 1,
                   boxShadow: 3,
-                  mb: 3,
                 }}
               >
                 {allSummariesVisible ? "عرض أقل" : "عرض الكل"}
