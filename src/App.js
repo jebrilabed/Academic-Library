@@ -1,5 +1,5 @@
 import Header from "./components/Header";
-import SelectionSummary from "./components/SelectionSummary";
+
 import Summaries from "./pages/Summaries";
 import About from "./pages/About";
 import Footer from "./components/Footer";

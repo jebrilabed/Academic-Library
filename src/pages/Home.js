@@ -1,5 +1,5 @@
 import React from "react";
-import { Container, Typography, Button, Box, Grid, Card, CardContent, Paper, Fade } from "@mui/material";
+import { Container, Typography, Button, Box, Grid, Card, Paper, Fade } from "@mui/material";
 import MenuBookOutlinedIcon from "@mui/icons-material/MenuBookOutlined";
 import SchoolOutlinedIcon from "@mui/icons-material/SchoolOutlined";
 import FindInPageOutlinedIcon from "@mui/icons-material/FindInPageOutlined";
