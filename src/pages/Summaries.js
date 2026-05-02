@@ -13,10 +13,12 @@ import ToggleButton from "@mui/material/ToggleButton";
 import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
 import CircularProgress from "@mui/material/CircularProgress";
 import SearchOffIcon from "@mui/icons-material/SearchOff";
+import Fade from "@mui/material/Fade";
 
 // Hooks Imports
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { useFetch } from "../hooks/useFetch";
+import { SelectionContext } from "../contexts/SelectionContext";
 
 // API Imports
 import { getSubjects, getSummaries, getLectures } from "../api";
@@ -34,11 +36,15 @@ export default function Summaries() {
   const [allLecturesVisible, setLecturesVisible] = useState(false);
   const [allSummariesVisible, setSummariesVisible] = useState(false);
 
-  const storedSpecialty = JSON.parse(localStorage.getItem("specialty")) || {};
-  const storedLevel = JSON.parse(localStorage.getItem("level")) || {};
-  const storedSemester = JSON.parse(localStorage.getItem("semester")) || {};
+  const { specialty, level, semester, isLoaded } = useContext(SelectionContext);
+
+  const storedSpecialty = specialty || {};
+  const storedLevel = level || {};
+  const storedSemester = semester || {};
 
   const [alignment, setAlignment] = useState("الملخصات");
+
+
 
   // Fetch Subjects
   const { data: subjects, loading: loadingSubjects } = useFetch(
@@ -151,8 +157,17 @@ export default function Summaries() {
     </Box>
   );
 
+  if (!isLoaded) {
+    return (
+      <Box sx={{ display: "flex", justifyContent: "center", mt: 10 }}>
+        <CircularProgress />
+      </Box>
+    );
+  }
+
   return (
-    <Container maxWidth="lg" sx={{ marginTop: 3 }}>
+    <Fade in={true} timeout={500}>
+      <Container maxWidth="lg" sx={{ marginTop: 3 }}>
       <Box
         sx={{
           display: "flex",
@@ -180,8 +195,8 @@ export default function Summaries() {
           <FormControl fullWidth>
             <TextField
               sx={{
-                "& .MuiInputLabel-root": { color: "gray" },
-                "& .MuiInputLabel-root.Mui-focused": { color: "gray" },
+                "& .MuiInputLabel-root": { color: "text.secondary" },
+                "& .MuiInputLabel-root.Mui-focused": { color: "primary.main" },
               }}
               id="outlined-basic"
               label="ابحث..."
@@ -197,8 +212,8 @@ export default function Summaries() {
             <InputLabel
               id="demo-simple-select-label"
               sx={{
-                color: "gray",
-                "&.Mui-focused": { color: "gray" },
+                color: "text.secondary",
+                "&.Mui-focused": { color: "primary.main" },
               }}
             >
               المادة
@@ -308,6 +323,7 @@ export default function Summaries() {
           </Box>
         </>
       )}
-    </Container>
+      </Container>
+    </Fade>
   );
 }

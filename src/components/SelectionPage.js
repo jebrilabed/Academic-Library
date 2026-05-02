@@ -4,6 +4,7 @@ import { Card, CardActionArea } from "@mui/material";
 import CardContent from "@mui/material/CardContent";
 import { Grid } from "@mui/material";
 import CircularProgress from "@mui/material/CircularProgress";
+import Fade from "@mui/material/Fade";
 
 
 /**
@@ -31,7 +32,8 @@ export default function SelectionPage({ title, items, loading, onSelect }) {
   }
 
   return (
-    <Container maxWidth="lg" sx={{ marginTop: 3, marginBottom: 3 }}>
+    <Fade in={true} timeout={500}>
+      <Container maxWidth="lg" sx={{ marginTop: 3, marginBottom: 3 }}>
       <Typography sx={{ fontSize: 24, fontWeight: "700" }}>
         {title}{" "}
       </Typography>
@@ -40,7 +42,7 @@ export default function SelectionPage({ title, items, loading, onSelect }) {
           <Grid size={{ md: 6, xs: 12 }} key={item.id}>
             <Card
               sx={{
-                bgcolor: "Background.paper",
+                bgcolor: "background.paper",
                 padding: 1,
                 transition: "0.3s",
                 "&:hover": { transform: "scale(1.05)", cursor: "pointer" },
@@ -57,6 +59,7 @@ export default function SelectionPage({ title, items, loading, onSelect }) {
           </Grid>
         ))}
       </Grid>
-    </Container>
+      </Container>
+    </Fade>
   );
 }

@@ -33,7 +33,7 @@ export default function SummaryCard({ summary, type }) {
           >
             <LibraryBooksOutlinedIcon
               sx={{
-                color: "text.secondary",
+                color: "#ffffff",
                 fontSize: 50,
                 bgcolor: "button.primary",
                 padding: 1.2,

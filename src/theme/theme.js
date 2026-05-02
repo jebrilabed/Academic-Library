@@ -7,42 +7,52 @@ export const getTheme = (mode) =>
       mode,
       ...(mode === "light"
         ? {
-            primary: { main: "#0f1724" },
-            secondary: { main: "#0b63b8" },
+            primary: {
+              main: "#1e3a8a", // Darker Navy Blue
+              contrastText: "#ffffff",
+            },
+            secondary: {
+              main: "#475569",
+            },
             background: {
-              default: "#f6f7f9",
+              default: "#f8fafc",
               paper: "#ffffff",
-              shadow: "0 4px 12px rgba(0, 0, 0, 0.05)",
             },
             text: {
-              primary: "#0f1724",
-              secondary: "#fff",
+              primary: "#0f172a",
+              secondary: "#64748b",
             },
             button: {
-              primary: "#0b63b8",
+              primary: "#1e3a8a",
             },
           }
         : {
-            primary: { main: "#e6eef8" },
-
+            primary: {
+              main: "#3b82f6", // Muted Blue for Dark Mode
+              contrastText: "#ffffff",
+            },
+            secondary: {
+              main: "#94a3b8",
+            },
             background: {
-              default: "#0b1220",
-              paper: "#131b2d",
+              default: "#0f172a",
+              paper: "#1e293b",
             },
             text: {
-              primary: "#e6eef8",
-              secondary: "#0f172a",
+              primary: "#f8fafc",
+              secondary: "#94a3b8",
             },
             button: {
-              primary: "#4ea1ff",
+              primary: "#3b82f6",
             },
           }),
     },
 
     typography: {
-      fontFamily: "cairo",
+      fontFamily: "Cairo, Roboto, Arial, sans-serif",
       button: {
         textTransform: "none",
+        fontWeight: 600,
       },
     },
   });

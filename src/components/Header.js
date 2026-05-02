@@ -1,131 +1,242 @@
-// MUI Imports
-import Grid from "@mui/material/Grid";
-import { Card } from "@mui/material";
-import CardContent from "@mui/material/CardContent";
-import Container from "@mui/material/Container";
-import { Button } from "@mui/material";
-import { Typography, FormControlLabel } from "@mui/material";
+import React, { useContext, useState } from "react";
+import {
+  AppBar,
+  Toolbar,
+  Typography,
+  Button,
+  IconButton,
+  Drawer,
+  List,
+  ListItem,
+  ListItemText,
+  Box,
+  Container,
+  FormControlLabel,
+  Chip,
+  Fade
+} from "@mui/material";
+import MenuIcon from "@mui/icons-material/Menu";
 import { ColorModeContext } from "../contexts/ThemeContext";
+import { SelectionContext } from "../contexts/SelectionContext";
 import MaterialUISwitch from "../components/MaterialUISwitch";
+import { useNavigate, useLocation } from "react-router-dom";
 import MenuBookOutlinedIcon from "@mui/icons-material/MenuBookOutlined";
+import SchoolIcon from "@mui/icons-material/School";
 
-// Hooks Imports
-import { useContext } from "react";
-
-function Header() {
+export default function Header() {
   const { mode, toggleColorMode } = useContext(ColorModeContext);
+  const { specialty, level, semester, isLoaded } = useContext(SelectionContext);
+  const [mobileOpen, setMobileOpen] = useState(false);
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const handleDrawerToggle = () => {
+    setMobileOpen(!mobileOpen);
+  };
+
+  const handleNavClick = (path) => {
+    navigate(path);
+    setMobileOpen(false);
+  };
 
   const scrollToSection = (id) => {
     const section = document.getElementById(id);
     if (section) {
-      section.scrollIntoView({
-        behavior: "smooth",
-        block: "start",
-      });
+      section.scrollIntoView({ behavior: "smooth", block: "start" });
     }
+    setMobileOpen(false);
   };
 
-  const navButtonSx = {
-    fontSize: { md: 19, sm: 17, xs: 15 },
-    padding: "0 20px",
-    height: "80%",
-  };
+  const hasSelection = specialty || level || semester;
+
+  let dynamicBtnLabel = "اختر التخصص";
+  let dynamicBtnPath = "/majors";
+
+  if (specialty && level && semester) {
+    dynamicBtnLabel = "عرض المواد";
+    dynamicBtnPath = "/summaries";
+  } else if (specialty && level) {
+    dynamicBtnLabel = "اختر الفصل";
+    dynamicBtnPath = "/semester";
+  } else if (specialty) {
+    dynamicBtnLabel = "اختر السنة";
+    dynamicBtnPath = "/level";
+  }
+
+  const drawer = (
+    <Box sx={{ textAlign: "center", width: 250 }}>
+      <Typography variant="h6" sx={{ my: 2, fontWeight: "bold" }}>
+        منصتنا
+      </Typography>
+      <List>
+        <ListItem button onClick={() => handleNavClick("/")}>
+          <ListItemText primary="الرئيسية" sx={{ textAlign: "center" }} />
+        </ListItem>
+        <ListItem button onClick={() => scrollToSection("about")}>
+          <ListItemText primary="عن الموقع" sx={{ textAlign: "center" }} />
+        </ListItem>
+        <ListItem button onClick={() => handleNavClick(dynamicBtnPath)} sx={{ mt: 2 }}>
+          <Button variant="contained" fullWidth color="primary" sx={{ borderRadius: 2, fontWeight: "bold" }}>
+            {dynamicBtnLabel}
+          </Button>
+        </ListItem>
+      </List>
+    </Box>
+  );
 
   return (
-    <Card
-      sx={{
-        bgcolor: "Background.paper",
-        position: "sticky",
-        top: 0,
-        zIndex: 100,
-      }}
-    >
-      <CardContent>
+    <>
+      <AppBar position="sticky" color="inherit" elevation={hasSelection ? 1 : 0} sx={{ 
+        zIndex: 100, 
+        borderBottom: hasSelection ? "none" : "1px solid",
+        borderColor: "divider",
+        transition: "all 0.3s ease"
+      }}>
         <Container maxWidth="lg">
-          <Grid
-            container
-            spacing={2}
-            width="100%"
-            sx={{
-              display: "flex",
-              justifyContent: { md: "space-between", xs: "center" },
-            }}
-          >
-            <Grid
-              item
-              md={3}
-              sx={{
-                display: "flex",
-                alignItems: "center",
-                gap: 1.5,
-              }}
-            >
-              <MenuBookOutlinedIcon
-                sx={{
-                  color: "text.secondary",
-                  fontSize: { md: 50, sm: 48, xs: 46 },
-                  bgcolor: "button.primary",
-                  padding: 1.2,
-                  borderRadius: 1.8,
-                }}
-              />
+          {/* Main Header Row - Increased Height */}
+          <Toolbar disableGutters sx={{ 
+            justifyContent: "space-between", 
+            py: { xs: 1.5, md: 2.5 }, // Taller header
+            transition: "all 0.3s ease"
+          }}>
+            <Box sx={{ display: "flex", alignItems: "center", gap: 1.5 }}>
+              <MenuBookOutlinedIcon color="primary" sx={{ fontSize: 36 }} />
               <Typography
-                gutterBottom
+                variant="h5"
+                component="div"
+                sx={{ fontWeight: "800", cursor: "pointer", display: { xs: "none", sm: "block" } }}
+                onClick={() => navigate("/")}
+              >
+                ملخصات ومحاضرات
+              </Typography>
+            </Box>
+
+            {/* Desktop Navigation */}
+            <Box sx={{ display: { xs: "none", md: "flex" }, gap: 1.5, alignItems: "center" }}>
+              <Button
+                onClick={() => handleNavClick("/")}
                 sx={{
-                  fontSize: { md: 30, sm: 28, xs: 26 },
-                  fontWeight: "800",
-                  marginTop: "10px",
+                  color: location.pathname === "/" ? "primary.main" : "text.primary",
+                  fontWeight: location.pathname === "/" ? 700 : 500,
+                  borderRadius: 2,
+                  px: 2,
+                  py: 1,
+                  "&:hover": { bgcolor: "action.hover" },
                 }}
               >
-                ملخصات ومحاضرات جامعية
-              </Typography>
-            </Grid>
-            <Grid
-              item
-              md={7}
-              sx={{
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-            >
-              <Button onClick={() => scrollToSection("home")} sx={navButtonSx}>
                 الرئيسية
               </Button>
-
-              <Button onClick={() => scrollToSection("about")} sx={navButtonSx}>
+              <Button
+                onClick={() => scrollToSection("about")}
+                sx={{ 
+                  color: "text.primary", 
+                  fontWeight: 500, 
+                  px: 2, 
+                  py: 1,
+                  borderRadius: 2,
+                  "&:hover": { bgcolor: "action.hover" } 
+                }}
+              >
                 عن الموقع
               </Button>
-
               <Button
-                onClick={() => scrollToSection("contact")}
-                sx={navButtonSx}
+                variant="contained"
+                color="primary"
+                onClick={() => handleNavClick(dynamicBtnPath)}
+                sx={{ 
+                  fontWeight: 700, 
+                  px: 3, 
+                  py: 1,
+                  ml: 1,
+                  borderRadius: 2,
+                  boxShadow: "0 4px 14px 0 rgba(37, 99, 235, 0.39)",
+                  "&:hover": { transform: "translateY(-1px)", boxShadow: "0 6px 20px rgba(37, 99, 235, 0.4)" },
+                  transition: "all 0.2s ease"
+                }}
               >
-                الاتصال
+                {dynamicBtnLabel}
               </Button>
-            </Grid>
-            <Grid
-              item
-              md={1}
-              sx={{
-                display: "flex",
-                justifyContent: "center",
-              }}
-            >
+            </Box>
+
+            <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
               <FormControlLabel
-                control={
-                  <MaterialUISwitch
-                    checked={mode === "dark"}
-                    onChange={toggleColorMode}
-                  />
-                }
+                control={<MaterialUISwitch checked={mode === "dark"} onChange={toggleColorMode} />}
+                label=""
+                sx={{ m: 0 }}
               />
-            </Grid>
-          </Grid>
+              <IconButton
+                color="inherit"
+                aria-label="open drawer"
+                edge="start"
+                onClick={handleDrawerToggle}
+                sx={{ display: { md: "none" } }}
+              >
+                <MenuIcon />
+              </IconButton>
+            </Box>
+          </Toolbar>
+
+          {/* Selection Bar Section - Only shown if data exists */}
+          {isLoaded && hasSelection && (
+            <Fade in={Boolean(hasSelection)}>
+              <Box sx={{ 
+                pb: 2, 
+                display: "flex", 
+                alignItems: "center", 
+                gap: 1, 
+                flexWrap: "wrap",
+                borderTop: "1px solid",
+                borderColor: "divider",
+                pt: 2
+              }}>
+                <SchoolIcon sx={{ fontSize: 18, color: "text.secondary", mr: 0.5 }} />
+                {specialty && (
+                  <Chip 
+                    label={specialty.name} 
+                    size="small" 
+                    variant="outlined" 
+                    color="primary" 
+                    onClick={() => navigate("/majors")}
+                    sx={{ fontWeight: 600 }}
+                  />
+                )}
+                {level && (
+                  <Chip 
+                    label={level.name} 
+                    size="small" 
+                    variant="outlined" 
+                    onClick={() => navigate("/level")}
+                    sx={{ fontWeight: 600 }}
+                  />
+                )}
+                {semester && (
+                  <Chip 
+                    label={semester.name} 
+                    size="small" 
+                    variant="outlined" 
+                    onClick={() => navigate("/semester")}
+                    sx={{ fontWeight: 600 }}
+                  />
+                )}
+              </Box>
+            </Fade>
+          )}
         </Container>
-      </CardContent>
-    </Card>
+      </AppBar>
+
+      {/* Mobile Drawer */}
+      <Drawer
+        anchor="right"
+        open={mobileOpen}
+        onClose={handleDrawerToggle}
+        ModalProps={{ keepMounted: true }}
+        sx={{
+          display: { xs: "block", md: "none" },
+          "& .MuiDrawer-paper": { boxSizing: "border-box", width: 250 },
+        }}
+      >
+        {drawer}
+      </Drawer>
+    </>
   );
 }
-
-export default Header;
