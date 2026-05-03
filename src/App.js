@@ -1,13 +1,37 @@
 import React from "react";
-import UnderConstruction from "./pages/UnderConstruction";
+import { Routes, Route } from "react-router-dom";
+import { Box } from "@mui/material";
+import Header from "./components/Header";
+import Footer from "./components/Footer";
+import Home from "./pages/Home";
+import About from "./pages/About";
+import Major from "./pages/Major";
+import Levels from "./pages/Levels";
+import Semester from "./pages/Semester";
+import Summaries from "./pages/Summaries";
+import { SelectionProvider } from "./contexts/SelectionContext";
 import "./App.css";
 
-// NOTE: The entire application routing and layout has been temporarily 
-// replaced with the UnderConstruction component.
-// To revert to the normal website, restore the previous code using Git.
-
 function App() {
-  return <UnderConstruction />;
+  return (
+    <SelectionProvider>
+      <Box sx={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}>
+        <Header />
+        <Box component="main" sx={{ flexGrow: 1 }}>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/majors" element={<Major />} />
+            <Route path="/level" element={<Levels />} />
+            <Route path="/semester" element={<Semester />} />
+            <Route path="/summaries" element={<Summaries />} />
+          </Routes>
+        </Box>
+        <About />
+
+        <Footer />
+      </Box>
+    </SelectionProvider>
+  );
 }
 
 export default App;
