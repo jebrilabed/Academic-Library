@@ -6,7 +6,7 @@ import AutoStoriesOutlinedIcon from "@mui/icons-material/AutoStoriesOutlined";
 
 export default function About() {
   return (
-    <Container maxWidth="lg" sx={{ marginTop: 8, marginBottom: 8 }}>
+    <Container id="about" maxWidth="lg" sx={{ marginTop: 8, marginBottom: 8 }}>
       <Paper
         elevation={0}
         sx={{

@@ -5,6 +5,7 @@ import Header from "./components/Header";
 import Footer from "./components/Footer";
 import Home from "./pages/Home";
 import About from "./pages/About";
+
 import Major from "./pages/Major";
 import Levels from "./pages/Levels";
 import Semester from "./pages/Semester";
@@ -20,6 +21,7 @@ function App() {
         <Box component="main" sx={{ flexGrow: 1 }}>
           <Routes>
             <Route path="/" element={<Home />} />
+          <Route path="/about" element={<About />} />
             <Route path="/majors" element={<Major />} />
             <Route path="/level" element={<Levels />} />
             <Route path="/semester" element={<Semester />} />
