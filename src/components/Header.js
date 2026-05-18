@@ -20,7 +20,6 @@ import { ColorModeContext } from "../contexts/ThemeContext";
 import { SelectionContext } from "../contexts/SelectionContext";
 import MaterialUISwitch from "../components/MaterialUISwitch";
 import { useNavigate, useLocation } from "react-router-dom";
-import MenuBookOutlinedIcon from "@mui/icons-material/MenuBookOutlined";
 import SchoolIcon from "@mui/icons-material/School";
 
 export default function Header() {
@@ -65,9 +64,27 @@ export default function Header() {
 
   const drawer = (
     <Box sx={{ textAlign: "center", width: 250 }}>
-      <Typography variant="h6" sx={{ my: 2, fontWeight: "bold" }}>
-        منصتنا
-      </Typography>
+      <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", my: 3, gap: 1 }}>
+        <Box
+          component="img"
+          src="/logo.jpeg"
+          alt="لوجو الموقع"
+          onClick={() => handleNavClick("/")}
+          sx={{
+            height: 64,
+            width: 64,
+            borderRadius: "50%",
+            objectFit: "cover",
+            cursor: "pointer",
+            border: "2px solid",
+            borderColor: "primary.main",
+            boxShadow: "0 2px 8px rgba(0,0,0,0.15)"
+          }}
+        />
+        <Typography variant="h6" sx={{ fontWeight: "bold", cursor: "pointer" }} onClick={() => handleNavClick("/")}>
+          ملخصات ومحاضرات
+        </Typography>
+      </Box>
       <List>
         <ListItem button onClick={() => handleNavClick("/")}>
           <ListItemText primary="الرئيسية" sx={{ textAlign: "center" }} />
@@ -75,7 +92,7 @@ export default function Header() {
         <ListItem button onClick={() => scrollToSection("about")}>
           <ListItemText primary="عن الموقع" sx={{ textAlign: "center" }} />
         </ListItem>
-        <ListItem button onClick={() => handleNavClick(dynamicBtnPath)} sx={{ mt: 2 }}>
+        <ListItem button onClick={() => handleNavClick(dynamicBtnPath)} sx={{ mt: 2, px: 2 }}>
           <Button variant="contained" fullWidth color="primary" sx={{ borderRadius: 2, fontWeight: "bold" }}>
             {dynamicBtnLabel}
           </Button>
@@ -100,7 +117,26 @@ export default function Header() {
             transition: "all 0.3s ease"
           }}>
             <Box sx={{ display: "flex", alignItems: "center", gap: 1.5 }}>
-              <MenuBookOutlinedIcon color="primary" sx={{ fontSize: 36 }} />
+              <Box
+                component="img"
+                src="/logo.jpeg"
+                alt="لوجو الموقع"
+                onClick={() => navigate("/")}
+                sx={{
+                  height: { xs: 40, md: 48 },
+                  width: { xs: 40, md: 48 },
+                  borderRadius: "50%",
+                  objectFit: "cover",
+                  cursor: "pointer",
+                  border: "2px solid",
+                  borderColor: "primary.main",
+                  boxShadow: "0 2px 8px rgba(0,0,0,0.1)",
+                  transition: "transform 0.2s ease-in-out",
+                  "&:hover": {
+                    transform: "scale(1.05)"
+                  }
+                }}
+              />
               <Typography
                 variant="h5"
                 component="div"

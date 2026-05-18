@@ -1,6 +1,5 @@
 import React from "react";
 import { Container, Typography, Button, Box, Grid, Card, Paper, Fade } from "@mui/material";
-import MenuBookOutlinedIcon from "@mui/icons-material/MenuBookOutlined";
 import SchoolOutlinedIcon from "@mui/icons-material/SchoolOutlined";
 import FindInPageOutlinedIcon from "@mui/icons-material/FindInPageOutlined";
 import UpdateOutlinedIcon from "@mui/icons-material/UpdateOutlined";
@@ -8,6 +7,8 @@ import DevicesOutlinedIcon from "@mui/icons-material/DevicesOutlined";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import { useNavigate } from "react-router-dom";
+
+
 
 export default function Home() {
   const navigate = useNavigate();
@@ -70,7 +71,24 @@ export default function Home() {
         >
           <Container maxWidth="md">
             <Box sx={{ display: "flex", justifyContent: "center", mb: 3 }}>
-              <MenuBookOutlinedIcon sx={{ fontSize: 60, color: "primary.main" }} />
+              <Box
+                component="img"
+                src="/logo.jpeg"
+                alt="لوجو الموقع"
+                sx={{
+                  height: { xs: 80, md: 100 },
+                  width: { xs: 80, md: 100 },
+                  borderRadius: "50%",
+                  objectFit: "cover",
+                  border: "3px solid",
+                  borderColor: "primary.main",
+                  boxShadow: "0 4px 20px rgba(0,0,0,0.15)",
+                  transition: "transform 0.3s ease",
+                  "&:hover": {
+                    transform: "scale(1.08)"
+                  }
+                }}
+              />
             </Box>
             <Typography variant="h2" sx={{ fontWeight: 800, fontSize: { xs: "2.5rem", md: "4rem" }, mb: 3, lineHeight: 1.2 }}>
               جميع مذكراتك الجامعية في <Box component="span" sx={{ color: "primary.main" }}>مكان واحد</Box>
